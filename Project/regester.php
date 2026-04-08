@@ -45,23 +45,28 @@
 		</nav>
 
 		<div class="d-flex flex-column align-items-center align-self-center">
-			<form id="sign-in" class="mt-5 w-80 rounded-5">
+			<form id="sign-in" class="mt-5 w-80 rounded-5" method="POST" action="subm.php">
 				<div class="form-group">
-					<h2 class="text-center">Sign In</h2>
-					<h3 class="text-center">You'll be flying with us soon!</h3>
+					<h2 class="text-center">Regester an Account Today!</h2>
+					<h3 class="text-center">See the skys in comfort!</h3>
 					<label for="email">Email address</label>
-					<input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Enter email">
+					<input type="email" class="form-control" id="email" name="email" placeholder="Email">
 				</div>
 				<div class="form-group">
-					<label for="exampleInputPassword1">Password</label>
-					<input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+					<label for="username">Username</label>
+					<input type="text" class="form-control" id="username" name="username" placeholder="Username">
 				</div>
-				<div class="form-check mb-2">
-					<input type="checkbox" class="form-check-input" id="exampleCheck1">
-					<label class="form-check-label" for="exampleCheck1">Remember me</label>
+				<div class="form-group">
+					<label for="password">Password</label>
+					<input type="password" class="form-control" id="password" name="password" placeholder="Password">
 				</div>
-				<p>No Account? <a href="regester.php">Regester Today!</a></p>
-				<button type="submit" class="btn btn-primary">Submit</button>
+				<div class="form-group">
+					<label for="confirm_password">Confirm Password</label>
+					<input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirm Password">
+				</div>
+				<div class="text-center">
+					<button type="submit" class="btn btn-primary mt-3">Submit</button>
+				</div>
 			</form>
 		</div>
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
