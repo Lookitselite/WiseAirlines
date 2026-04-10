@@ -1,9 +1,9 @@
 <?php
 session_start();
 
-include dirname(__DIR__) . '/P/pass.php';
+include('/home/apw1043/p/dhb.inc');
 // Connect to MySQL
-$connect = new mysqli($hostname, $user, $passcode, $database);
+$connect = mysqli_connect($db_server,$user,$password,$db_names); 
 
 
 // Connection error check
@@ -27,6 +27,7 @@ if ($result->num_rows>0) {
     header("Location:welcome.php");
 } else {
     header("Location:signin.php");
+    exit();
 }
 $connect->close();
 
