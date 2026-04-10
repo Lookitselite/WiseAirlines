@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 	<head>
@@ -38,7 +41,13 @@
 						</li>
 					</ul>
       				<span class="sign-in">
-        				<a class="btn btn-primary" href="signin.php" role="button">Sign In</a>
+						<?php
+						if (isset($_SESSION['logstatus'])) {
+							echo '<a class="btn btn-primary" href="LoginSystem/logout.php" role="button">Log Out</a>';
+						} else {
+        					echo '<a class="btn btn-primary" href="LoginSystem/signin.php" role="button">Sign In</a>';
+						}
+						?>
       				</span>
     			</div>
  			</div>
