@@ -27,7 +27,7 @@
 			$query = $connect->prepare("insert into accounts (username, password, email) values (?,?,?)");
 			$query->bind_param('sss',$username, $password, $email);
 				
-			if ($query->execute() === TRUE && !($_POST['adRequest'])) { //executes our query
+			if ($query->execute() === TRUE) { //executes our query
 				header("Location:signin.php");
 				exit();
 			} 

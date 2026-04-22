@@ -12,22 +12,22 @@
 	$messages = array();
 
 	if ($_SERVER['REQUEST_METHOD'] === 'POST') { //	this checks if our button is submitted
-
-		//registure our customer
-
+		print_r($_POST);
+		
 		$username	=  isset($_POST['username'])    ? $_POST['username']    : '';
-		$email		=  isset($_POST['email'])    ? $_POST['email']    : '';
-		$password	=  isset($_POST['password'])    ? $_POST['password']    : '';
-		$repassword	=  isset($_POST['repassword'])    ? $_POST['repassword']    : '';
+		$password	=  isset($_POST['password'])    ? $_POST['password']    : ''; 
+		$adpassword	=  isset($_POST['adpassword'])    ? $_POST['adpassword']    : '';
+		$role	=  isset($_POST['role'])    ? $_POST['role']    : '';
 		//are our boxes full
-		if ($username === '' || $email === '' || $password === '' || !($repassword === $password)) {
+		if ($username === '' || $adpassword === '' || $password === '' || !($adpassword === $adminpassword)) {
 			$messages[] = "Fill out all feilds correctly";
 		} else { //adds escape keys to characters that might break our sql		
-
-			$query = $connect->prepare("insert into accounts (username, password, email) values (?,?,?)");
-			$query->bind_param('sss',$username, $password, $email);
+			
+			$upquery = $connect->prepare("UPDATE accounts SET adminStatus = 1 WHERE username = $username AND password = $password;");
+			$query = $connect->prepare("insert into employees (employee_id, role, rate, hours) values (?,?,?,?)");
+			$query->bind_param('isis',$_SESSION["id"], test, 15.00, 'part-time'); //need id from account table	
 				
-			if ($query->execute() === TRUE && !($_POST['adRequest'])) { //executes our query
+			if ($query->execute() === TRUE && $upquery->execute() === TRUE) { //executes our query
 				header("Location:signin.php");
 				exit();
 			} 
@@ -37,6 +37,7 @@
 		}
 	}
 	$connect->close();
+	
 ?>
 
 
@@ -46,7 +47,7 @@
 		<title>Regester</title>
 		<meta charset="utf-8">
 		<link href="index.css" type="text/css" rel="stylesheet">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta username="viewport" content="width=device-width, initial-scale=1">
 		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
         <link rel="icon" type="image/x-icon" href="../imgs/favicon.jpg">
 	</head>
@@ -112,16 +113,16 @@
 			<form method="post" id="regester" class="mt-5 w-25 rounded-5">
 				<div class="form-group">
 					
-					<label for="username">Your Username</label>  
-					<input name="username" type="text" class="form-control" id="username" placeholder="Enter Username">
+					<label for="username">Your Full username</label>  
+					<input username="username" type="text" class="form-control" id="username" placeholder="Enter username">
 				</div>
 				<div class="form-group">
 					<label for="password">Your Password</label>
-					<input name="password" type="password" class="form-control" id="password" placeholder="Password">
+					<input username="password" type="password" class="form-control" id="password" placeholder="Password">
 				</div>
 				<div class="form-group">
-					<label for="password">Admin Regestration Password</label>
-					<input name="password" type="password" class="form-control" id="password" placeholder="Password">
+					<label for="adpassword">Admin Regestration Password</label>
+					<input username="adpassword" type="password" class="form-control" id="adpassword" placeholder="Admin Password">
 				</div>
 				<div class="form-group mb-2 w-50">
                     <label for="role">Role</label>
