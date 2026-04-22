@@ -12,7 +12,7 @@ if ($connect->connect_error) {
 }
 
 // We need our information from the 
-$query = $connect->prepare("Select id, username, password from accounts where username=? and password=?");
+$query = $connect->prepare("Select account_id, username, password from accounts where username=? and password=?");
 $username = $_SESSION['username'];
 $password = $_SESSION['password'];
 $query->bind_param("ss", $username, $password);
