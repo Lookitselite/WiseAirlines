@@ -31,11 +31,6 @@
 				header("Location:signin.php");
 				exit();
 			} 
-			/*elseif ($_POST['adRequest']) { //if user selects 
-				header("Location:adminRegester.php");
-				exit();
-			} 
-			*/
 			else {
 				$messages[] = "Error: " . mysqli_error($connect); //uho! something went wrong
 			}

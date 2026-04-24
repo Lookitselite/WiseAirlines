@@ -1,5 +1,6 @@
 <?php
 	include('/home/apw1043/p/dhb.inc');
+	session_start();
 	// Connect to MySQL
 	$connect = mysqli_connect($db_server,$user,$password,$db_names);
 
@@ -12,23 +13,28 @@
 	$messages = array();
 
 	if ($_SERVER['REQUEST_METHOD'] === 'POST') { //	this checks if our button is submitted
-		print_r($_POST);
-		
-		$username	=  isset($_POST['username'])    ? $_POST['username']    : '';
-		$password	=  isset($_POST['password'])    ? $_POST['password']    : ''; 
 		$adpassword	=  isset($_POST['adpassword'])    ? $_POST['adpassword']    : '';
 		$role	=  isset($_POST['role'])    ? $_POST['role']    : '';
 		//are our boxes full
-		if ($username === '' || $adpassword === '' || $password === '' || !($adpassword === $adminpassword)) {
+		if ($adpassword !== $adminpassword) { //is the admin password correct
+			$messages[] = "Admin Regestration Password is incorrect";
+		}
+		if ($adpassword !== $adminpassword) {
 			$messages[] = "Fill out all feilds correctly";
 		} else { //adds escape keys to characters that might break our sql		
 			
-			$upquery = $connect->prepare("UPDATE accounts SET adminStatus = 1 WHERE username = $username AND password = $password;");
+			$employee_id = $_SESSION['id'];
+
+			$rate = 15.00;
+			$hours = "part-time";
+
+			$upquery = $connect->prepare("UPDATE accounts SET adminStatus = 1 WHERE username = ? AND password = ?;");
 			$query = $connect->prepare("insert into employees (employee_id, role, rate, hours) values (?,?,?,?)");
-			$query->bind_param('isis',$_SESSION["id"], test, 15.00, 'part-time'); //need id from account table	
+			$upquery->bind_param("ss", $_SESSION['username'], $_SESSION['password']);
+			$query->bind_param('isds',$employee_id, $role, $rate, $hours); //need id from account table	
 				
-			if ($query->execute() === TRUE && $upquery->execute() === TRUE) { //executes our query
-				header("Location:signin.php");
+			if ($query->execute() && $upquery->execute()) { //executes our query
+				header("Location:../account.php");
 				exit();
 			} 
 			else {
@@ -83,9 +89,9 @@
       				<span class="sign-in">
         				<?php
 						if (isset($_SESSION['logstatus'])) {
-							echo '<a class="btn btn-primary" href="LoginSystem/logout.php" role="button">Log Out</a>';
+							echo '<a class="btn btn-primary" href="logout.php" role="button">Log Out</a>';
 						} else {
-        					echo '<a class="btn btn-primary" href="LoginSystem/signin.php" role="button">Sign In</a>';
+        					echo '<a class="btn btn-primary" href="signin.php" role="button">Sign In</a>';
 						}
 						?>
       				</span>
@@ -97,6 +103,7 @@
 		// Show messages
 		if (!empty($messages)) {
 			echo "<div>";
+			echo $_SESSION['id'];
 			foreach ($messages as $m) {
 				echo "<p>" . $m . "</p>";
 			}
@@ -114,19 +121,19 @@
 				<div class="form-group">
 					
 					<label for="username">Your Full username</label>  
-					<input username="username" type="text" class="form-control" id="username" placeholder="Enter username">
+					<input name="username" type="text" class="form-control" id="username" placeholder="Enter username">
 				</div>
 				<div class="form-group">
 					<label for="password">Your Password</label>
-					<input username="password" type="password" class="form-control" id="password" placeholder="Password">
+					<input name="password" type="password" class="form-control" id="password" placeholder="Password">
 				</div>
 				<div class="form-group">
 					<label for="adpassword">Admin Regestration Password</label>
-					<input username="adpassword" type="password" class="form-control" id="adpassword" placeholder="Admin Password">
+					<input name="adpassword" type="password" class="form-control" id="adpassword" placeholder="Admin Password">
 				</div>
 				<div class="form-group mb-2 w-50">
                     <label for="role">Role</label>
-                    <select class="form-control" id="role">
+                    <select class="form-control" id="role" name="role">
                         <option>Sales</option>
                         <option>Customer service</option>
                         <option>System Admin</option>

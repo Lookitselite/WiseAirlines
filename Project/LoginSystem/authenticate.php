@@ -22,7 +22,7 @@ $result = $query->get_result();
 if ($result->num_rows>0) {
     $row = $result->fetch_assoc();
 
-    $_SESSION['id'] = $row['id'];
+    $_SESSION['id'] = $row['account_id'];
     $_SESSION['logstatus'] = TRUE;
     header("Location:welcome.php");
 } else {
