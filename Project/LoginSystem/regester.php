@@ -12,7 +12,6 @@
 	$messages = array();
 
 	if ($_SERVER['REQUEST_METHOD'] === 'POST') { //	this checks if our button is submitted
-
 		//registure our customer
 
 		$username	=  isset($_POST['username'])    ? $_POST['username']    : '';

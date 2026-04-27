@@ -19,16 +19,5 @@ Thought I'd leave this so we can keep track of what's being worked on
 
 #### Status: 
 
-- page exists, not complete
+- Done
 
-### 3: Booking Flights
-
-- yknow
-- like an airline website should
-- im gonna think about this more when i get some more sleep
-
-## Misc. Work:
-
-### 1: README
-
-- Good documentation is important

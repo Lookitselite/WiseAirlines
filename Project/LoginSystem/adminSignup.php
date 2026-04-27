@@ -13,20 +13,26 @@
 	$messages = array();
 
 	if ($_SERVER['REQUEST_METHOD'] === 'POST') { //	this checks if our button is submitted
+		$usrcheck = $connect->prepare("Select employee_id, role, rate, hours from employees where employee_id = ?");
+		$usrcheck->bind_param("i", $_SESSION['id']);
+		$usrcheck->execute();
+		$result = $usrcheck->get_result();
+
+		if ($result->num_rows > 0) {
+			$row = $result->fetch_assoc();
+			$messages[] = "You are already an employee with the role of " . $row['role'] . " and a pay rate of $" . $row['rate'] . " per hour for " . $row['hours'] . " work.";
+			$dup = TRUE;
+		}
 		$adpassword	=  isset($_POST['adpassword'])    ? $_POST['adpassword']    : '';
 		$role	=  isset($_POST['role'])    ? $_POST['role']    : '';
 		//are our boxes full
 		if ($adpassword !== $adminpassword) { //is the admin password correct
 			$messages[] = "Admin Regestration Password is incorrect";
-		}
-		if ($adpassword !== $adminpassword) {
-			$messages[] = "Fill out all feilds correctly";
-		} else { //adds escape keys to characters that might break our sql		
-			
+		} else if (!$dup) { //adds escape keys to characters that might break our sql		
 			$employee_id = $_SESSION['id'];
 
-			$rate = 15.00;
-			$hours = "part-time";
+			$rate = $_POST['role'] === "System Admin" ? 28.00 : 22.00; 
+			$hours = $_POST['role'] === "System Admin" ? "full-time" : "part-time"; 
 
 			$upquery = $connect->prepare("UPDATE accounts SET adminStatus = 1 WHERE username = ? AND password = ?;");
 			$query = $connect->prepare("insert into employees (employee_id, role, rate, hours) values (?,?,?,?)");
@@ -103,7 +109,6 @@
 		// Show messages
 		if (!empty($messages)) {
 			echo "<div>";
-			echo $_SESSION['id'];
 			foreach ($messages as $m) {
 				echo "<p>" . $m . "</p>";
 			}
@@ -118,15 +123,6 @@
 				This is required to differentiate you from a customer. If you do not know it, ask your superior.
 			</h4> <!--redo phrasing later-->
 			<form method="post" id="regester" class="mt-5 w-25 rounded-5">
-				<div class="form-group">
-					
-					<label for="username">Your Full username</label>  
-					<input name="username" type="text" class="form-control" id="username" placeholder="Enter username">
-				</div>
-				<div class="form-group">
-					<label for="password">Your Password</label>
-					<input name="password" type="password" class="form-control" id="password" placeholder="Password">
-				</div>
 				<div class="form-group">
 					<label for="adpassword">Admin Regestration Password</label>
 					<input name="adpassword" type="password" class="form-control" id="adpassword" placeholder="Admin Password">
