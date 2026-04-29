@@ -52,6 +52,7 @@ session_start();
     			</div>
  			</div>
 		</nav>
+		
 		<?php
 		if (isset($_SESSION['logstatus'])) {
 			$username = $_SESSION['username'];
@@ -59,9 +60,21 @@ session_start();
 			'<div class="d-flex flex-column"> 
 				<h3 class="text-center mt-5 pt-5 fw-bold">Your Account</h3>
 				<h4 class="text-center mt-2">Hello ' . $username . '</h4>
-				<p class="text-center"> You currently have 0 flights booked</p>
-				<a class="btn btn-primary w-auto mx-auto" href="LoginSystem/adminSignup.php" role="button">Regester as Admin</a>
-			</div>';
+				<p class="text-center"> You currently have 0 flights booked</p>';
+			if (isset($_SESSION['role'])) {
+				$role = $_SESSION['role'];
+				if ($role = 'System admin' || $role = 'Sales') {
+					echo 'sys/Sales';
+				} else if ($role = 'System admin' || $role = 'Customer service') {
+					echo 'sys/cs';
+				} else {
+					echo 'you are a roleless employee. oops, thats a bug';
+				}
+			} else {
+				echo
+				'<a class="btn btn-primary w-auto mx-auto" href="LoginSystem/adminSignup.php" role="button">Regester as Admin</a>;';
+			}
+			echo '</div>';
 		} else { 
 			echo 
 			'<div class="d-flex flex-column">

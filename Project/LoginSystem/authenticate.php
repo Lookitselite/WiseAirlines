@@ -22,6 +22,14 @@ $result = $query->get_result();
 if ($result->num_rows>0) {
     $row = $result->fetch_assoc();
 
+    if ($row['adminStatus'] = 1) {
+        $equery = $connect->prepare("Select role from employees where employee_id=?");
+        $equery->bind_param("i", $row['account_id']);
+        $query->execute();
+        $result = $query->get_result();
+        $_SESSION = $result;
+    }
+
     $_SESSION['id'] = $row['account_id'];
     $_SESSION['logstatus'] = TRUE;
     header("Location:welcome.php");
