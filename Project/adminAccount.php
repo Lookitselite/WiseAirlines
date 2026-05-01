@@ -71,29 +71,18 @@ session_start();
 			'<div class="d-flex flex-column"> 
 				<h3 class="text-center mt-5 pt-5 fw-bold">Your Account</h3>
 				<h4 class="text-center mt-2">Hello ' . $username . '</h4>
-				<p class="text-center"> You currently have 0 flights booked</p>';
+				<h5 class="text-center mt-2">Your role is: ' . $_SESSION['role'] . '</h5>';
 			if (isset($_SESSION['role'])) {
 				$role = $_SESSION['role'];
 				if ($role = 'System admin' || $role = 'Sales') {
-					echo 'sys/Sales';
+				//given flight_id, update flight cost
 				} else if ($role = 'System admin' || $role = 'Customer service') {
-					echo 'sys/cs';
+				//given username, list their tickets
 				} else {
 					echo 'you are a roleless employee. oops, thats a bug';
 				}
-			} else {
-				echo
-				'<a class="btn btn-primary w-auto mx-auto" href="LoginSystem/adminSignup.php" role="button">Regester as Admin</a>;';
 			}
 			echo '</div>';
-		} else { 
-			echo 
-			'<div class="d-flex flex-column">
-				<h3 class="text-center mt-5 pt-5 fw-bold">Your Account</h3>
-				<h4 class="text-center mt-2">Sorry, we can not seem to find your account information.</h4>
-				<p class="text-center mt-2">To see your flights and account details, please sign in.</p>
-				<a class="btn btn-primary w-25 mx-auto" href="LoginSystem/signin.php" role="button">Sign In</a>
-			</div>';
 		}
 		?>
 		

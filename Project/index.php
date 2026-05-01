@@ -18,7 +18,7 @@ session_start();
 
 
 //connection to our database
-include('/home/tr1158/p/secret.php');
+include('/home/apw1043/p/dhb.inc');
 // Connect to MySQL
 $connect = mysqli_connect($db_server,$user,$password,$db_names);
 

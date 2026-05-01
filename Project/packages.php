@@ -82,7 +82,7 @@ session_start();
 										Enjoy the food, culture, ancient history of this lovely country. Don't forget the beerhouses! 
 									</p>
 									<div class="d-flex flex-column justify-content-between align-items-center">
-										<a class="btn btn-outline-dark" href="LoginSystem/signin.php" role="button">Book Now</a>
+										<a class="btn btn-outline-dark" href="transaction.php" role="button">Book Now</a>
 									</div>
 								</div>
 							</div>
@@ -97,7 +97,7 @@ session_start();
 										Kyoto, and Osaka. Embrace the culture, and discover the beauty of this country.
 									</p>
 									<div class="d-flex flex-column justify-content-between align-items-center">
-										<a class="btn btn-outline-dark" href="LoginSystem/signin.php" role="button">Book Now</a>
+										<a class="btn btn-outline-dark" href="transaction.php" role="button">Book Now</a>
 									</div>
 								</div>
 							</div>
@@ -113,7 +113,7 @@ session_start();
 										A trip to the rainforest is also included in this package, experience nature like never before!
 									</p>
 									<div class="d-flex flex-column justify-content-between align-items-center">
-										<a class="btn btn-outline-dark" href="LoginSystem/signin.php" role="button">Book Now</a>
+										<a class="btn btn-outline-dark" href="transaction.php" role="button">Book Now</a>
 									</div>
 								</div>
 							</div>

@@ -40,7 +40,9 @@
 			$query->bind_param('isds',$employee_id, $role, $rate, $hours); //need id from account table	
 				
 			if ($query->execute() && $upquery->execute()) { //executes our query
-				header("Location:../account.php");
+				$_SESSION['adminStatus'] = 1;
+				$_SESSION['role'] = $role;
+				header("Location:../adminAccount.php");
 				exit();
 			} 
 			else {

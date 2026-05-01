@@ -34,6 +34,7 @@ if ($result->num_rows>0) {
         $equery->close();
     }
 
+    $_SESSION['adminStatus'] = $row['adminStatus'];
     $_SESSION['id'] = $row['account_id'];
     $_SESSION['logstatus'] = TRUE;
     header("Location:welcome.php");

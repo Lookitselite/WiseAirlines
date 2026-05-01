@@ -29,7 +29,7 @@ We will run a loop that creates and displays tickets in that transaction
 
 
 //connection to our database
-include('/home/tr1158/p/secret.php');
+include('/home/apw1043/p/dhb.inc');
 // Connect to MySQL
 $connect = mysqli_connect($db_server,$user,$password,$db_names);
 
@@ -162,18 +162,9 @@ echo '</pre>';*/
 			'<div class="d-flex flex-column"> 
 				<h3 class="text-center mt-5 pt-5 fw-bold">Your Account</h3>
 				<h4 class="text-center mt-2">Hello ' . $username . '</h4>';
-			if (isset($_SESSION['role'])) {
-				$role = $_SESSION['role'];
-				if ($role = 'System admin' || $role = 'Sales') {
-					echo 'sys/Sales';
-				} else if ($role = 'System admin' || $role = 'Customer service') {
-					echo 'sys/cs';
-				} else {
-					echo 'you are a roleless employee. oops, thats a bug';
-				}
-			} else {
+			if (!(isset($_SESSION['adminStatus']) && $_SESSION['adminStatus'] === 1)) {
 				echo
-				'<a class="btn btn-primary w-auto mx-auto" href="LoginSystem/adminSignup.php" role="button">Regester as Admin</a>;';
+				'<a class="btn btn-primary w-auto mx-auto" href="LoginSystem/adminSignup.php" role="button">Register as Admin</a>';
 			}
 			echo '</div>';
 		} else { 
@@ -185,6 +176,8 @@ echo '</pre>';*/
 				<a class="btn btn-primary w-25 mx-auto" href="LoginSystem/signin.php" role="button">Sign In</a>
 			</div>';
 		}
+		echo '<div class="d-flex flex-column align-items-center align-self-center mt-3">
+			  <h3 class="text-center fw-bold">Your Transactions</h3>';
 
 		if (isset($_SESSION['logstatus'])) {
 			echo '<div class="container-fluid mt-4">
@@ -212,13 +205,13 @@ echo '</pre>';*/
 																			<p class="mb-1">Ticket I.D. Number: #' . htmlspecialchars($ticket['transaction_ticket_id']) . '</p>	
 																		</div>
 																		<div class="col">
-																			<p class="mb-1">From : ' . htmlspecialchars($ticket['origin']) . '</p>	
+																			<p class="mb-1">From: ' . htmlspecialchars($ticket['origin']) . '</p>	
 																		</div>
 																		<div class="col">
-																			<p class="mb-1">To :' . htmlspecialchars($ticket['destination']) . '</p>	
+																			<p class="mb-1">To: ' . htmlspecialchars($ticket['destination']) . '</p>	
 																		</div>
 																		<div class="col">
-																			<p class="mb-1">Ticket Price' . htmlspecialchars($ticket['cost']) . '</p>	
+																			<p class="mb-1">Ticket Price: $' . htmlspecialchars($ticket['cost']) . '</p>	
 																		</div>																
 																	</div>';
 
@@ -235,6 +228,7 @@ echo '</pre>';*/
 			echo '  </div>
 				  </div>';
 		}
+		echo '</div>';
 		?>
 		
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>

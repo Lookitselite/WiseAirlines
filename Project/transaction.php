@@ -30,7 +30,7 @@ session_start();
 
 
 //connection to our database
-include('/home/tr1158/p/secret.php');
+include('/home/apw1043/p/dhb.inc');
 // Connect to MySQL
 $connect = mysqli_connect($db_server,$user,$password,$db_names);
 
@@ -400,12 +400,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['checkout'])) {
 
 														<div class=\"col\">
 															<label class=\"form-label fw-bold\">Departure Date: </label>
-															<label class=\"form-label fw-bold bg-white p-2 rounded\">" . htmlspecialchars($ticket['destination']) . "</label>
+															<label class=\"form-label fw-bold bg-white p-2 rounded\">" . htmlspecialchars($_SESSION['search']['dDate']) . "</label>
 														</div>
 
 														<div class=\"col\">
 															<label class=\"form-label fw-bold\">Return Date: </label>
-															<label class=\"form-label fw-bold bg-white p-2 rounded\">" . htmlspecialchars($ticket['destination']) . "</label>
+															<label class=\"form-label fw-bold bg-white p-2 rounded\">" . htmlspecialchars($_SESSION['search']['rDate']) . "</label>
 														</div>
 
 														<div class=\"col\">
@@ -536,11 +536,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['checkout'])) {
 			</div>
 		</div>
 
-
-		<!--This is just a print for checking values stored-->
+		
+		<!-- This is just a print for checking values stored
 		<div class="d-flex flex-column">
 			<?php
-			
+			/*
 			//print so I can see it on the website.
 			//prints our search array (contains the inputs of the user in search bar)
 			if (!empty($_SESSION['search'])) {
@@ -567,11 +567,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST" && isset($_POST['checkout'])) {
 			print_r($_SESSION['totalPrice']);
 			echo "</pre>";
 			
-			
+			*/
 			?>
 			
 		</div>
-
+		 -->
 
 
 
