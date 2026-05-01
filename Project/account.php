@@ -52,13 +52,40 @@ session_start();
     			</div>
  			</div>
 		</nav>
-
-		<div class="d-flex flex-column">
-			<h3 class="text-center mt-5 pt-5 fw-bold">Your Account</h3>
-			<h4 class="text-center mt-2">Sorry, we can't seem to find your account information.</h4>
-			<p class="text-center mt-2">To see your flights and account details, please sign in.</p>
-			<a class="btn btn-primary w-25 mx-auto" href="signin.php" role="button">Sign In</a>
-		</div>
+		
+		<?php
+		if (isset($_SESSION['logstatus'])) {
+			$username = $_SESSION['username'];
+			echo //note: why not just justify content center? fix at some point.
+			'<div class="d-flex flex-column"> 
+				<h3 class="text-center mt-5 pt-5 fw-bold">Your Account</h3>
+				<h4 class="text-center mt-2">Hello ' . $username . '</h4>
+				<p class="text-center"> You currently have 0 flights booked</p>';
+			if (isset($_SESSION['role'])) {
+				$role = $_SESSION['role'];
+				if ($role = 'System admin' || $role = 'Sales') {
+					echo 'sys/Sales';
+				} else if ($role = 'System admin' || $role = 'Customer service') {
+					echo 'sys/cs';
+				} else {
+					echo 'you are a roleless employee. oops, thats a bug';
+				}
+			} else {
+				echo
+				'<a class="btn btn-primary w-auto mx-auto" href="LoginSystem/adminSignup.php" role="button">Regester as Admin</a>;';
+			}
+			echo '</div>';
+		} else { 
+			echo 
+			'<div class="d-flex flex-column">
+				<h3 class="text-center mt-5 pt-5 fw-bold">Your Account</h3>
+				<h4 class="text-center mt-2">Sorry, we can not seem to find your account information.</h4>
+				<p class="text-center mt-2">To see your flights and account details, please sign in.</p>
+				<a class="btn btn-primary w-25 mx-auto" href="LoginSystem/signin.php" role="button">Sign In</a>
+			</div>';
+		}
+		?>
+		
 		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
 	</body>
 </html>
