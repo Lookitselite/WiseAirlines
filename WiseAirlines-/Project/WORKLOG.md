@@ -1,3 +1,66 @@
+
+# MOST RECENT SITE
+
+# important   
+-we have different files for our passwords for the database and admin, this has my files in it i had to create a new one because I didn't know what the admin password was
+
+# Updates 
+
+## Consolodation of pages
+- minor bugs in adminsignup.php
+- became familiar with how it runs
+- modified nav on all pages, to account for admin/user pages (we are only making accounts/adminaccounts)
+
+### index.php
+-search functionality (partially finished)
+- drop down feature suggesting destinations in correct format
+- search button brings to transaction page, stores details of search but doesn't get used
+- this needs to be fixed at some point
+
+### transaction.php
+- fully functional search for tickets in database
+- displays tickets with option to add to cart including number of tickets desired
+- Shopping cart display holds all tickets added, keeps track of all desired tickets
+- Checkout button brings you to checkout page
+
+### checkout.php
+- only php, this interacts with the database
+- adds new transaction
+- adds all tickets individually
+- sends you to completeCheckout.php
+
+### completeCheckout.php
+- page notifies user that transaction has been made
+- directs them to the accounts page for information on the transaction and tickets bought
+- button sends them to account.php/adminAccount.pnp
+
+### account.php
+- displays transactions and tickets that go along with it.
+- the html styling/bootstrap needs work, purely functional
+
+### adminAccount.php (not finished)
+- place holder at the moment, this will be for admin
+- view all transactions, tickets, employees, customers etc
+- Must be able to manipulate most of these tables
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 Thought I'd leave this so we can keep track of what's being worked on
 
 ## Front-end Work Queue:
@@ -34,7 +97,7 @@ Thought I'd leave this so we can keep track of what's being worked on
 - Good documentation is important
 
 ### Game Plan for Transactions. -todd
-
+# 
 ### Database 
 tables constructed with foreign keys and constraints
 needs a trigger or two (background process)
@@ -48,7 +111,7 @@ needs a trigger or two (background process)
 
 ## Todo  
 
-### Shopping Cart/transaction page  
+### Shopping Cart/transaction page  DONE
 The functionality of the page based off the database will be as follows:  
 
 Step 1: What information do we need to make a transaction?
