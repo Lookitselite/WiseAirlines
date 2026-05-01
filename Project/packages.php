@@ -1,5 +1,7 @@
 <?php
 session_start();
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,9 +29,19 @@ session_start();
 						<li class="nav-item">
 							<a class="nav-link" aria-current="page" href="index.php">Home</a>
 						</li>
+						<?php
+						if (isset($_SESSION['adminStatus']) && $_SESSION['adminStatus'] === 1) {
+							echo '
 						<li class="nav-item">
-							<a class="nav-link" href="account.php">My Info</a>
-						</li>
+							<a class="nav-link active" href="adminAccount.php">My Info</a>
+						</li>';
+						} else {
+							echo '
+						<li class="nav-item">
+							<a class="nav-link active" href="account.php">My Info</a>
+						</li>';
+						}
+						?>
 						<li class="nav-item">
 							<a class="nav-link active" href="packages.php">Packages</a>
 						</li>

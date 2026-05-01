@@ -1,5 +1,90 @@
 <?php
 session_start();
+
+/*
+What do we want?
+
+
+To have all ticket information That our user has bought.
+Transaction information
+All tickets
+
+Want to refund a transaction?
+Add Refund into Refund Transaction
+Remove Tickets from database on refund
+
+What do we need to get our information?
+- transactions
+- tickets
+
+Transactions needs $_SESSION['id'] this is our unique id that can find all transactions linked to it
+-stuff that into an array (think how we search for tickets same process can probably yoink the display from transactions)
+
+Tickets needs all transaction ids, This will be in our transaction array.
+- rinse and repeat for our tickets.
+
+one array that holds transaction information
+We will run a loop that creates and displays tickets in that transaction
+*/
+
+
+//connection to our database
+include('/home/tr1158/p/secret.php');
+// Connect to MySQL
+$connect = mysqli_connect($db_server,$user,$password,$db_names);
+
+// Connection error check
+if ($connect->connect_error) {
+	die("Could not connect: " . $connect->connect_error);
+}
+
+
+//finds user transactions
+$query = $connect->prepare("Select transaction_id, transaction_date, total from transactions where account_id=?");
+$query->bind_param("i",$_SESSION['id']);
+$query->execute();
+
+$result = $query->get_result();
+
+	
+$_SESSION['transactions'] = [];
+	
+//places them in array
+while ($row = $result->fetch_assoc()) {
+	$_SESSION['transactions'][]= $row;
+}
+
+
+//finds user tickets places them in array
+$_SESSION['account_tickets'] = [];
+
+foreach($_SESSION['transactions'] as $transaction) {
+	$query = $connect->prepare("Select tt.transaction_ticket_id, tt.transaction_id, tt.cost, f.origin, f.destination from transaction_tickets tt join flights f on tt.flight_id = f.flight_id where transaction_id=?");
+	$query->bind_param("i", $transaction['transaction_id']);
+	$query->execute();
+	$result = $query->get_result();
+	while ($row = $result->fetch_assoc()) {
+		$_SESSION['account_tickets'][]= $row;
+	}
+}
+
+
+
+
+
+/*echo '<pre>';
+echo '<br>';
+echo '<br>';
+echo '<br>';
+echo '<br>';
+echo '<br>';
+print_r($_SESSION['transactions']);
+print_r($_SESSION['account_tickets']);
+
+echo '</pre>';*/
+
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -27,9 +112,20 @@ session_start();
 						<li class="nav-item">
 							<a class="nav-link" aria-current="page" href="index.php">Home</a>
 						</li>
+						<?php
+						if (isset($_SESSION['adminStatus']) && $_SESSION['adminStatus'] === 1) {
+							echo '
+						<li class="nav-item">
+							<a class="nav-link active" href="adminAccount.php">My Info</a>
+						</li>';
+						} else {
+							echo '
 						<li class="nav-item">
 							<a class="nav-link active" href="account.php">My Info</a>
-						</li>
+						</li>';
+						}
+						?>
+						
 						<li class="nav-item">
 							<a class="nav-link" href="packages.php">Packages</a>
 						</li>
@@ -56,11 +152,16 @@ session_start();
 		<?php
 		if (isset($_SESSION['logstatus'])) {
 			$username = $_SESSION['username'];
+			//$num_flights =
+
+			//what info do we need for logic?
+			//$_SESSION['transactions']
+			//$_SESSION['account_tickets']
+			//we make a loop that within a loop
 			echo //note: why not just justify content center? fix at some point.
 			'<div class="d-flex flex-column"> 
 				<h3 class="text-center mt-5 pt-5 fw-bold">Your Account</h3>
-				<h4 class="text-center mt-2">Hello ' . $username . '</h4>
-				<p class="text-center"> You currently have 0 flights booked</p>';
+				<h4 class="text-center mt-2">Hello ' . $username . '</h4>';
 			if (isset($_SESSION['role'])) {
 				$role = $_SESSION['role'];
 				if ($role = 'System admin' || $role = 'Sales') {
@@ -83,6 +184,56 @@ session_start();
 				<p class="text-center mt-2">To see your flights and account details, please sign in.</p>
 				<a class="btn btn-primary w-25 mx-auto" href="LoginSystem/signin.php" role="button">Sign In</a>
 			</div>';
+		}
+
+		if (isset($_SESSION['logstatus'])) {
+			echo '<div class="container-fluid mt-4">
+					<div class="row">';
+						foreach ($_SESSION['transactions'] as $transaction) {
+									echo '<div class="col">
+											<div class="card sticky-top">
+												<div class="row align-items-center">
+													<div class="col">
+														<p class="mb-1">Transaction I.D. Number: #' . htmlspecialchars($transaction['transaction_id']) . '</p>	
+													</div>
+													<div class="col">
+														<p class="mb-1">Transaction Date: ' . htmlspecialchars($transaction['transaction_date']) . '</p>	
+													</div>
+													<div class="col">
+														<p class="mb-1">Total Price Paid: $' . htmlspecialchars($transaction['total']) . '</p>	
+													</div>
+													</div>';
+																										
+
+														foreach ($_SESSION['account_tickets'] as $ticket) {
+															if ($ticket['transaction_id'] === $transaction['transaction_id']) {
+																echo'<div class="row align-items-center">
+																		<div class="col">
+																			<p class="mb-1">Ticket I.D. Number: #' . htmlspecialchars($ticket['transaction_ticket_id']) . '</p>	
+																		</div>
+																		<div class="col">
+																			<p class="mb-1">From : ' . htmlspecialchars($ticket['origin']) . '</p>	
+																		</div>
+																		<div class="col">
+																			<p class="mb-1">To :' . htmlspecialchars($ticket['destination']) . '</p>	
+																		</div>
+																		<div class="col">
+																			<p class="mb-1">Ticket Price' . htmlspecialchars($ticket['cost']) . '</p>	
+																		</div>																
+																	</div>';
+
+															}
+
+									echo '		
+											</div>
+										</div>';
+									}
+
+
+
+							}
+			echo '  </div>
+				  </div>';
 		}
 		?>
 		
