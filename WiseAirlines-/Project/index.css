@@ -1,0 +1,18 @@
+#sign-in {
+    background: linear-gradient(204deg,rgba(29, 180, 240, 1) 0%, rgba(30, 59, 133, 1) 74%);
+    padding: 40px 300px 80px;
+}
+
+#form-bg {
+    background-image: url(imgs/formbg.jpg);
+    background-size: cover;
+    background-position: center;
+}
+
+.flight-form {
+    padding: 80px 100px;
+}
+
+.navbar {
+    background-color: darkblue;
+}
